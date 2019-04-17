@@ -2,7 +2,7 @@ package com.example.security.entity;
 
 import java.security.PrivateKey;
 
-import sun.security.x509.X500Name;
+import org.bouncycastle.asn1.x500.X500Name;
 
 public class Issuer {
 

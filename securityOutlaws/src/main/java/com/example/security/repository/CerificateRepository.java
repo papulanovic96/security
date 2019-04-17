@@ -9,6 +9,6 @@ import com.example.security.entity.Certificate;
 
 public interface CerificateRepository extends JpaRepository<Certificate, Long> {
 
-	 @Query(value = "select * from certificate", nativeQuery = true)
-	 List<Certificate> findAll();
+	 @Query(value = "SELECT * FROM certificate", nativeQuery = true)
+	 List<Certificate> findItAll();
 }
