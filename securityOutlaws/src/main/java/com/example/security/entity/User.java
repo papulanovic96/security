@@ -1,10 +1,13 @@
 package com.example.security.entity;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,25 +27,24 @@ public class User {
 	@Column(nullable = false)
 	private String surname;
 	
-	@Column(columnDefinition = "BINARY(255)")
-	@JsonIgnore
-	private byte[] password;
-
-	@Column(columnDefinition = "BINARY(64)")
-	@JsonIgnore
-	private byte[] salt;
+	@Column(nullable = false)
+	private String password;
+	
+	@ManyToMany
+	private Collection<UserRole> roles;
 
 	public User() {}
-	
-	public User(Long id, String username, String name, String surname, byte[] password, byte[] salt) {
+
+	public User(Long id, String username, String name, String surname, String password, Collection<UserRole> roles) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.name = name;
 		this.surname = surname;
 		this.password = password;
-		this.salt = salt;
+		this.roles = roles;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -76,21 +78,20 @@ public class User {
 		this.surname = surname;
 	}
 
-	public byte[] getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(byte[] password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public byte[] getSalt() {
-		return salt;
-	}
-
-	public void setSalt(byte[] salt) {
-		this.salt = salt;
-	}
 	
+	public Collection<UserRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Collection<UserRole> roles) {
+		this.roles = roles;
+	}
 	
 }
