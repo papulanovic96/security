@@ -90,7 +90,7 @@ public class CertificateService implements CertificateServiceIFace{
             X509CertImpl outCert = new X509CertImpl(info);
             outCert.sign(chain[0].getpKey(), issuerSigAlg);
 
-            chain[0].setpKey(null); // do not store privet key of issuer
+            chain[0].setpKey(null); // do not store private key of issuer
             PrivateKeyNCertificate[] expendedChain = new PrivateKeyNCertificate[chain.length + 1];
             expendedChain[0] = new PrivateKeyNCertificate(sub.getPrivateKey(), outCert);
             System.arraycopy(chain, 0, expendedChain, 1, chain.length);
