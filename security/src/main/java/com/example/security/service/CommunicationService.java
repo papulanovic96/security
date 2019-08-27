@@ -44,7 +44,7 @@ public class CommunicationService {
                     "cer_" + leaf.getCertificate().getSerialNumber() + ".cer").toString());
             out.write(leaf.getCertificate().getEncoded());
             out.close();
-            storePrivateKey("keys", "zgadija".toCharArray(),
+            storePrivateKey("keys", "root".toCharArray(),
                     Paths.get(trustStorage.toString(), "storage.jks").toString(), leaf.getpKey(),
                     PrivateKeyNCertificate.toChain(cks));
         } catch (Exception e) {
@@ -53,7 +53,7 @@ public class CommunicationService {
 
     public void sendTrustStorage(KeyStore keyStore, String destination) {
         try {
-            keyStore.store(new FileOutputStream(destination), "zgadija".toCharArray());
+            keyStore.store(new FileOutputStream(destination), "root".toCharArray());
         } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException e) {
         }
     }

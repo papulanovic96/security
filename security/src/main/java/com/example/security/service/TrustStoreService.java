@@ -43,8 +43,8 @@ public class TrustStoreService implements TrustStoreServiceIFace{
             KeyStore keyStore = KeyStore.getInstance("jks");
             keyStore.load(null, null);
 
-            keyStore.setKeyEntry("keys", keyGen.genKeyPair().getPrivate(), "zgadija".toCharArray(), cers);
-            keyStore.store(new FileOutputStream(paths[0]), "zgadija".toCharArray());
+            keyStore.setKeyEntry("keys", keyGen.genKeyPair().getPrivate(), "root".toCharArray(), cers);
+            keyStore.store(new FileOutputStream(paths[0]), "root".toCharArray());
             if (paths.length == 2) {
             	communicationService.sendTrustStorage(keyStore, paths[1]);
             }
@@ -60,7 +60,7 @@ public class TrustStoreService implements TrustStoreServiceIFace{
         Map<String, String> result = new HashMap<>();
         try {
             KeyStore keyStore = KeyStore.getInstance("jks");
-            keyStore.load(new FileInputStream(paths[0]), "zgadija".toCharArray());
+            keyStore.load(new FileInputStream(paths[0]), "root".toCharArray());
 
             Certificate[] certs = keyStore.getCertificateChain("keys");
             int i = certs.length;

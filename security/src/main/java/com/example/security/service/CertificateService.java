@@ -57,7 +57,7 @@ public class CertificateService implements CertificateServiceIFace{
             X509Certificate certificate = gen.getSelfCertificate(X500Name.asX500Name(started),
                     new Date(), (long) 365 * 24 * 3600, exts);
             PrivateKeyNCertificate ck = new PrivateKeyNCertificate(gen.getPrivateKey(), certificate);
-            storenload.store(new PrivateKeyNCertificate[]{ck}, server, CertificateType.ROOT, "keys", "zgadija");
+            storenload.store(new PrivateKeyNCertificate[]{ck}, server, CertificateType.ROOT, "keys", "root");
             certificateRepo.save(new Certificate(null, ck.getCertificate().getSerialNumber().toString(),
                     ck.getCertificate().getSubjectDN().getName(), true));
         } catch (IOException | CertificateException | InvalidKeyException | SignatureException
@@ -68,7 +68,7 @@ public class CertificateService implements CertificateServiceIFace{
 
 	@Override
 	public PrivateKeyNCertificate[] createNewSigned(X500Principal persona, String izdavac, CertificateType tip) {
-		PrivateKeyNCertificate[] chain = storenload.load("keys", "zgadija", izdavac, server, CertificateType.MIDDLEMAN);
+		PrivateKeyNCertificate[] chain = storenload.load("keys", "root", izdavac, server, CertificateType.MIDDLEMAN);
         Principal issuerData = chain[0].getCertificate().getSubjectDN();
         String issuerSigAlg = chain[0].getCertificate().getSigAlgName();
 
@@ -94,7 +94,7 @@ public class CertificateService implements CertificateServiceIFace{
             PrivateKeyNCertificate[] expendedChain = new PrivateKeyNCertificate[chain.length + 1];
             expendedChain[0] = new PrivateKeyNCertificate(sub.getPrivateKey(), outCert);
             System.arraycopy(chain, 0, expendedChain, 1, chain.length);
-            storenload.store(expendedChain, server, tip, "keys", "zgadija");
+            storenload.store(expendedChain, server, tip, "keys", "root");
             certificateRepo.save(new Certificate(null, expendedChain[0].getCertificate().
                     getSerialNumber().toString(), expendedChain[0].getCertificate()
                     .getSubjectDN().getName(), true));
