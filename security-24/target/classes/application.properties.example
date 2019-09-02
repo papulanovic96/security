@@ -1,0 +1,11 @@
+# Environment config file
+
+spring.profiles.active=dev
+
+spring.application.name=App name
+
+spring.jackson.serialization.write_dates_as_timestamps=true
+
+
+spring.mvc.view.prefix = /views/
+spring.mvc.view.suffix = .html
