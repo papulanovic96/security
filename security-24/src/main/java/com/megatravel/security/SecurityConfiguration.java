@@ -71,6 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                .regexMatchers(HttpMethod.POST, "\\/api\\/auth\\/register").permitAll()
                 .regexMatchers(HttpMethod.POST, "\\/api\\/auth\\/login").permitAll()
                 .regexMatchers(HttpMethod.POST, "\\/api\\/certificates").permitAll()
                 .regexMatchers(HttpMethod.GET, "\\/api\\/certificates").permitAll()

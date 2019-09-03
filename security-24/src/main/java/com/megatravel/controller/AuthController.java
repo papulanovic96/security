@@ -23,7 +23,6 @@ import com.megatravel.repository.UserRepository;
 import com.megatravel.service.AuthService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/auth")
 public class AuthController {
 

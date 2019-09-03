@@ -1,0 +1,50 @@
+<body>
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-b-160 p-t-50">
+				<form class="login100-form validate-form">
+					<span class="login100-form-title p-b-43">
+						Account Login
+					</span>
+					
+					<div class="wrap-input100 rs1 validate-input" data-validate = "Username is required">
+						<input class="input100"  name="email" email="true" [(ngModel)]="loginCredentials.email" required>
+						<span class="label-input100">E-mail</span>
+					</div>
+					
+					
+					<div class="wrap-input100 rs2 validate-input" data-validate="Password is required">
+						<input class="input100"  [(ngModel)]="loginCredentials.password" type="password" name="password" required>
+						<span class="label-input100">Password</span>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" (click)="login()" color="primary">
+							Sign in
+						</button>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+	
+<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+<!--===============================================================================================-->	
+
+</body>
