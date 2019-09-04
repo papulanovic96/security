@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthenticationService} from '../../services/authentication.service';
+import { TokenStorageService } from 'src/app/auth/token-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -10,30 +10,29 @@ import {AuthenticationService} from '../../services/authentication.service';
 export class AppComponent implements OnInit {
   
   constructor(
-    private authService: AuthenticationService,
+    private tokenStorage: TokenStorageService,
     private router: Router
   ) {}
 
 
   title = 'business-systems-security-frontend';
   
+  isLoggedIn: boolean;
   isAdmin: boolean;
 
   ngOnInit(): void {
-    
-    // if ( authority === 'admin')
-    // isAdmin = true
 
+    if (this.tokenStorage.getToken() != null) {
+      this.isLoggedIn = true;
 
-
-  }
-
-  loggedIn(): boolean {
-    return this.authService.isLoggedIn();
+      if (this.tokenStorage.getAuthorities().includes('ROLE_SECURITY_ADMIN'))
+        this.isAdmin = true;
+    }
   }
 
   logout(): void {
-    this.authService.logout();
+    this.tokenStorage.signOut();
+    this.isLoggedIn = false;
     this.router.navigate(['login']);
   }
 }

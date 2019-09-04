@@ -6,14 +6,15 @@ import {
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '../services/authentication.service';
+import { TokenStorageService } from '../auth/token-storage.service';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class CanActivateAuthGuard implements CanActivate {
   constructor(
-    private authenticationService: AuthenticationService,
+    private tokenStorage: TokenStorageService,
     private router: Router
   ) {}
 
@@ -21,10 +22,10 @@ export class CanActivateAuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.authenticationService.isLoggedIn()) {
+    if (this.tokenStorage.getToken() == null) {
       return true;
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['404']);
       return false;
     }
   }

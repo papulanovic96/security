@@ -1,8 +1,8 @@
-<a><button style="margin: 20px" class = "btn btn-success" data-toggle="collapse" data-target="#createNewCertificate">New certificate</button></a>
+<a><button *ngIf="isAdmin" style="margin: 20px" class = "btn btn-success" data-toggle="collapse" data-target="#createNewCertificate">New certificate</button></a>
 
-<button mat-raised-button (click)="startDownload()" color="primary">Download certificate</button>
+<button *ngIf="isAdmin" mat-raised-button (click)="startDownload()" color="primary">Download certificate</button>
 
-<div id="createNewCertificate" class="collapse">
+<div id="createNewCertificate" class="collapse" *ngIf="isAdmin">
 
   <mat-card class="create-cert-card">
     <mat-card-header>
@@ -51,7 +51,7 @@
       </form>
       <mat-spinner [diameter]="30" [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions *ngIf="isAdmin">
       <button mat-raised-button (click)="create()" color="primary">Create</button>
     </mat-card-actions>
   </mat-card>
@@ -59,7 +59,7 @@
 
 
 
-<div class="card-container">
+<div class="card-container" *ngIf="isAdmin">
   <div class="card" style="margin: 20px; border: none">    
   <div class= "row" >
       <div class = "col-sm-2" *ngFor = 'let ss of nodes'>
@@ -67,8 +67,8 @@
               <img src= "https://serving.photos.photobox.com/643058341cc38744407bf22eb46023b33b452cf2d1b0967950eccca74c2ec484eac882d1.jpg" class="card-img-top" alt="oop">
               <div class="card-body">
                 <h5 class="card-title" >Certificate: {{ ss.id }}</h5>
-                  <a><button class="btn btn-primary" (click)="onTreeNodeSelect(ss.id, ss.name)"><i class="fa fa-folder-open"></i> Select</button></a>
-                  <a><button style="float: right" class="btn btn-danger" (click)="delete(ss.id)"><i class="fa fa-close"></i> Delete</button></a>
+                  <a *ngIf="isAdmin"><button class="btn btn-primary" (click)="onTreeNodeSelect(ss.id, ss.name)"><i class="fa fa-folder-open"></i> Select</button></a>
+                  <a *ngIf="isAdmin"><button style="float: right" class="btn btn-danger" (click)="delete(ss.id)"><i class="fa fa-close"></i> Delete</button></a>
               </div>
             </div>
       </div>

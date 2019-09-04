@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<div style="text-align:center" *ngIf="loggedIn()">
+<div style="text-align:center" *ngIf="isLoggedIn">
   <nav class="navbar navbar-expand navbar-dark bg-custom-2" >
-    <ul class = "nav navbar-nav">
-      <li *ngIf="isAdmin"><a class="nav-link" [routerLink]="['/tree']" routerLinkActive="router-link-active" >Tree view</a></li>
-      <li><a class="nav-link" [routerLink]="['/login']" routerLinkActive="router-link-active" *ngIf="!loggedIn()">Log In</a></li>
-      <li><a class="nav-link" *ngIf="loggedIn()" (click)="logout()">Log Out</a></li>
+    <ul class = "nav navbar-nav" *ngIf="isAdmin">
+      <li><a class="nav-link fa fa-toolbox" [routerLink]="['/tree']" routerLinkActive="router-link-active"> Manage certificates</a></li>
+    </ul>
+    <ul class = "nav ml-auto">
+      <li><a class="nav-link fa fa-sign-in" [routerLink]="['/login']" routerLinkActive="router-link-active" *ngIf="!isLoggedIn"></a></li>
+      <li><a class="nav-link fa fa-sign-out" *ngIf="isLoggedIn" (click)="logout()"></a></li>
     </ul>
   </nav>
   <br><br>

@@ -4,6 +4,7 @@ import {CertificateService} from '../../services/certificate.service';
 import {TreeItem} from '../../models/treeItem';
 import {ToastrService} from 'ngx-toastr';
 import { saveAs } from 'file-saver';
+import { TokenStorageService } from 'src/app/auth/token-storage.service';
 
 @Component({
   selector: 'app-certificate-tree',
@@ -29,16 +30,22 @@ export class CertificateTreeComponent implements OnInit {
 
   cert: TreeItem;
 
+  isAdmin: boolean;
+
   constructor(private certService: CertificateService,
-              private toastrService: ToastrService) {
+              private toastrService: ToastrService,
+              private tokenStorage: TokenStorageService) {
     this.nodes = null;
   }
 
   ngOnInit() {
     this.nodes = [];
     this.options = {};
-
     this.fetchForest();
+
+    if (this.tokenStorage.getAuthorities().includes('ROLE_SECURITY_ADMIN'))
+      this.isAdmin = true;
+  
   }
 
   onTreeNodeSelect(id: number, name: string) {
@@ -53,7 +60,7 @@ export class CertificateTreeComponent implements OnInit {
       .subscribe( 
         response => { this.nodes = response },
         (err) => {
-          this.toastrService.error(err.error.apierror.message);
+          this.toastrService.error(err.error.message);
         }
       );
   }

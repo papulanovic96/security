@@ -6,14 +6,14 @@ import {
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '../services/authentication.service';
+import { TokenStorageService } from '../auth/token-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CanActivateAdminServiceGuard implements CanActivate {
   constructor(
-    private authenticationService: AuthenticationService,
+    private tokenStorage: TokenStorageService,
     private router: Router
   ) {}
 
@@ -21,14 +21,11 @@ export class CanActivateAdminServiceGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    const currentUser = this.authenticationService.getCurrentUser();
-
-    if (currentUser.user.userAuthorities[0].name === 'admin' || currentUser.user.userAuthorities[1].name === 'admin'
-        || currentUser.user.userAuthorities[2].name === 'admin' || currentUser.user.userAuthorities[3].name === 'admin') {
+   
+    if (this.tokenStorage.getAuthorities().includes('ROLE_SECURITY_ADMIN'))
       return true;
-    }
 
-    this.router.navigate(['/login']);
+    this.router.navigate(['404']);
     return false;
   }
 }

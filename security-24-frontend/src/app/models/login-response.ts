@@ -1,4 +1,10 @@
 export interface LoginResponse {
-  userId: number;
-  token: string;
+  username: string;
+  accessToken: string;
+  grantedAuthorities: string[];
+}
+
+export class SigninRequest {
+  username: string;
+  password: string;
 }

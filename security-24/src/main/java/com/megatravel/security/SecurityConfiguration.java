@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
@@ -24,7 +23,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.megatravel.errorHandler.CustomAccessDeniedExceptionHandler;
-import com.megatravel.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -33,7 +31,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private UserDetailsImplementation userDetailsService;
+    
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     public void configureAuthentication( AuthenticationManagerBuilder authenticationManagerBuilder)
@@ -53,12 +54,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public AuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-        AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter();
-        authenticationTokenFilter.setAuthenticationManager(authenticationManagerBean());
-        return authenticationTokenFilter;
-    }
+//    @Bean
+//    public AuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+//        AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter();
+//        authenticationTokenFilter.setAuthenticationManager(authenticationManagerBean());
+//        return authenticationTokenFilter;
+//    }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -80,7 +81,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint())
+                .authenticationEntryPoint(new JwtAuthEntryPoint())
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new CustomAccessDeniedExceptionHandler())
@@ -89,9 +90,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         //.and().csrf().csrfTokenRepository(csrfTokenRepository());
 
         // Custom JWT based authentication
-        httpSecurity.addFilterBefore(authenticationTokenFilterBean(),
-                UsernamePasswordAuthenticationFilter.class).cors();
+//        httpSecurity.addFilterBefore(authenticationTokenFilterBean(),
+//                UsernamePasswordAuthenticationFilter.class).cors();
         httpSecurity.cors();
+        
+        // Apply JWT
+        httpSecurity
+        	.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
     }
     
     /**

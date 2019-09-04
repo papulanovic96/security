@@ -8,13 +8,13 @@
 					</span>
 					
 					<div class="wrap-input100 rs1 validate-input" data-validate = "Username is required">
-						<input class="input100"  name="email" email="true" [(ngModel)]="loginCredentials.email" required>
-						<span class="label-input100">E-mail</span>
+						<input class="input100"  name="username" [(ngModel)]="request.username" required>
+						<span class="label-input100">Username</span>
 					</div>
 					
 					
 					<div class="wrap-input100 rs2 validate-input" data-validate="Password is required">
-						<input class="input100"  [(ngModel)]="loginCredentials.password" type="password" name="password" required>
+						<input class="input100"  [(ngModel)]="request.password" type="password" name="password" required>
 						<span class="label-input100">Password</span>
 					</div>
 

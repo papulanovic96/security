@@ -19,6 +19,7 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -130,6 +131,7 @@
             <artifactId>mc-pki</artifactId>
             <version>0.9.0</version>
         </dependency>
+
 
     </dependencies>
 

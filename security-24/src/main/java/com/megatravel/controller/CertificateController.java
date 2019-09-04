@@ -33,7 +33,7 @@ public class CertificateController {
     @RequestMapping(value = "/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('admin')")
+	@PreAuthorize("hasRole('ROLE_SECURITY_ADMIN')")
     public ResponseEntity<CertificateDTO> getById(@PathVariable int id) {
         return new ResponseEntity<>(
                 new CertificateDTO(certificateService.findById(id)),
@@ -43,7 +43,7 @@ public class CertificateController {
     @RequestMapping(value = "/{id}/zip",
             method = RequestMethod.GET,
             produces="application/zip")
-    @PreAuthorize("hasAuthority('admin')")
+	@PreAuthorize("hasRole('ROLE_SECURITY_ADMIN')")
     public byte[] getZip(HttpServletResponse response, @PathVariable int id) {
         response.setStatus(HttpServletResponse.SC_OK);
         response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
@@ -89,7 +89,7 @@ public class CertificateController {
     @RequestMapping(value = "/all",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('admin')")
+	@PreAuthorize("hasRole('ROLE_SECURITY_ADMIN')")
     public ResponseEntity<ArrayList<Certificate>> getAll() {
         return new ResponseEntity<>(
                 certificateService.findAll(),
@@ -99,7 +99,7 @@ public class CertificateController {
     @RequestMapping(value = "/forest",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('admin')")
+	@PreAuthorize("hasRole('ROLE_SECURITY_ADMIN')")
     public ResponseEntity<ArrayList<TreeItem>> getForest() {
         return new ResponseEntity<>(
                 certificateService.getTree(),
@@ -110,7 +110,7 @@ public class CertificateController {
     @RequestMapping(value = "",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('admin')")
+	@PreAuthorize("hasRole('ROLE_SECURITY_ADMIN')")
     public ResponseEntity<CertificateDTO> generate(@RequestBody CertificateRequestDTO request) {
 
         System.out.println("\n\nEVO GA:");
